@@ -78,22 +78,29 @@ const CryptoPricefinal = () => {
 
 
       <div className="crypto-box">
-      <select value={symbol1} onChange={handleSymbol1Change}>
-    <option value="">Select a token</option>
-    <option value="BTC">Bitcoin بیت کوین</option>
-    <option value="ETH">Ethereum اتریوم</option>
-    <option value="LTC">Litecoin لایت کوین</option>
-    <option value="pepe">Pepe پپه</option>
-    <option value="shib">Shibainu شیبا</option>
-    <option value="ADA">Cardano کاردانو</option>
-    <option value="Dot">Polkadot پولکادات</option>
-  </select>
-  <input
-    type="text"
-    placeholder="Enter a symbol"
-    value={symbol1}
-    onChange={handleSymbol1Change}
-  />
+      <input
+  type="text"
+  placeholder="Enter a symbol"
+  value={symbol1}
+  onChange={handleSymbol1Change}
+  list="tokens"
+/>
+<datalist id="tokens">
+  <option value="BTC">Bitcoin بیت کوین</option>
+  <option value="Toman">Toman تومان</option>
+  <option value="USDT">Tether تتر</option>
+  <option value="ETH">Ethereum اتریوم</option>
+  <option value="LTC">Litecoin لایت کوین</option>
+  <option value="pepe">Pepe پپه</option>
+  <option value="shib">Shibainu شیبا</option>
+  <option value="ADA">Cardano کاردانو</option>
+  <option value="Dot">Polkadot پولکادات</option>
+  <option value="Toman">Toman تومان</option>
+
+</datalist>
+
+
+
 
 
         <label htmlFor="amount" className="crypto-label">Amount</label>
