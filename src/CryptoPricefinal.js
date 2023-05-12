@@ -18,8 +18,11 @@ const CryptoPricefinal = () => {
   };
 
   const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+    const inputValue = event.target.value;
+    const formattedAmount = inputValue.replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    setAmount(formattedAmount);
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,6 +46,9 @@ const CryptoPricefinal = () => {
       const amountInUsd = amountInSymbol1 * symbol1ToUsdRate;
       const amountInSymbol2 = amountInUsd / symbol2ToUsdRate;
 
+     
+      
+
       setResult(amountInSymbol2);
       setError(null);
     } catch (error) {
@@ -54,11 +60,14 @@ const CryptoPricefinal = () => {
 
   const formatPrice = (price) => {
     if (price) {
-      return parseFloat(price).toFixed(8);
+      const formattedPrice = parseFloat(price).toLocaleString(undefined, { maximumFractionDigits: 8 });
+      return formattedPrice;
     } else {
       return "-";
     }
   };
+  
+  
 
  
   const handleSwapClick = () => {
