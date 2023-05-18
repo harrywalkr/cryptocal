@@ -8,6 +8,9 @@ const CryptoPricefinal = () => {
   const [amount, setAmount] = useState("");
   const [result, setResult] = useState("");
   const [error, setError] = useState(null);
+  const [resultInToman, setResultInToman] = useState("");
+  const [resultInDollar, setResultInDollar] = useState("");
+  
 
   const handleSymbol1Change = (event) => {
     setSymbol1(event.target.value.toUpperCase());
@@ -32,31 +35,52 @@ const CryptoPricefinal = () => {
       );
       console.log("API Response 1:", response1.data);
       const symbol1PriceUsd = response1.data.last_price_usd;
-
+  
       const response2 = await axios.get(
         `https://cors-anywhere.herokuapp.com/https://coincodex.com/api/coincodex/get_coin/${symbol2}`
       );
       console.log("API Response 2:", response2.data);
       const symbol2PriceUsd = response2.data.last_price_usd;
-
+  
       const amountInSymbol1 = parseFloat(amount);
       const symbol1ToUsdRate = parseFloat(symbol1PriceUsd);
       const symbol2ToUsdRate = parseFloat(symbol2PriceUsd);
-
+  
       const amountInUsd = amountInSymbol1 * symbol1ToUsdRate;
       const amountInSymbol2 = amountInUsd / symbol2ToUsdRate;
-
-     
-      
-
+  
+      const tomanRateResponse = await axios.get(
+        "https://cors-anywhere.herokuapp.com/https://coincodex.com/api/coincodex/get_coin/Toman"
+      );
+      console.log("Toman Conversion Rate:", tomanRateResponse.data);
+      const tomanRate = parseFloat(tomanRateResponse.data.last_price_usd);
+  
+      const equivalentInUsd = amountInUsd;
+      const equivalentInToman = equivalentInUsd * tomanRate;
+  
       setResult(amountInSymbol2);
+      setResultInToman(equivalentInToman);
+      setResultInDollar(equivalentInUsd);
+  
       setError(null);
     } catch (error) {
       console.error("API Error:", error);
       setError("Unable to get price data. Please check the symbols and try again.");
       setResult(null);
+      setResultInToman("");
+      setResultInDollar("");
     }
   };
+  
+  
+  
+  
+
+
+
+
+
+  
 
   const formatPrice = (price) => {
     if (price) {
@@ -105,6 +129,8 @@ const CryptoPricefinal = () => {
   <option value="ADA">Cardano کاردانو</option>
   <option value="Dot">Polkadot پولکادات</option>
   <option value="Toman">Toman تومان</option>
+  <option value="TRY">لیر ترکیه</option>
+
 
 </datalist>
 
@@ -139,12 +165,30 @@ const CryptoPricefinal = () => {
   <option value="shib">Shibainu شیبا</option>
   <option value="ADA">Cardano کاردانو</option>
   <option value="Dot">Polkadot پولکادات</option>
+  <option value="TRY">لیر ترکیه</option>
+
 </datalist>
 
 
         <div className="crypto-result">{formatPrice(result)}</div>
       </div>
 
+      <table className="crypto-table">
+  <thead>
+    <tr>
+      <th>Result (Symbol 2)</th>
+      <th>Equivalent in Toman</th>
+      <th>Equivalent in Dollar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{formatPrice(result)}</td>
+      <td>{formatPrice(resultInToman)}</td>
+      <td>{formatPrice(resultInDollar)}</td>
+    </tr>
+  </tbody>
+</table>
 
 
 
@@ -154,6 +198,9 @@ const CryptoPricefinal = () => {
 </form>
 
     </div>
+
+
+
   );
 };
 

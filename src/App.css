@@ -516,3 +516,24 @@ select option:checked {
 .crypto-box:first-child {
   margin-bottom: -5px;
 }
+
+
+
+
+
+.crypto-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.crypto-table th,
+.crypto-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.crypto-table th {
+  background-color: #f2f2f2;
+}
